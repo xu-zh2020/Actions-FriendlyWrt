@@ -3,15 +3,17 @@
 sed -i -e '/CONFIG_MAKE_TOOLCHAIN=y/d' configs/rockchip/01-nanopi
 sed -i -e 's/CONFIG_IB=y/# CONFIG_IB is not set/g' configs/rockchip/01-nanopi
 sed -i -e 's/CONFIG_SDK=y/# CONFIG_SDK is not set/g' configs/rockchip/01-nanopi
-# ========== 新增 ImmortalWrt opkg软件源（推荐） ==========
+# ========== 新增 ImmortalWrt feeds 源 ==========
 cd friendlywrt
-# 创建files目录，用来打包文件进固件
-mkdir -p files/etc/opkg
 
-# 写入immortalwrt源配置到customfeeds.conf
-cat > files/etc/opkg/customfeeds.conf <<EOF
-src/gz immortalwrt_base https://mirrors.ustc.edu.cn/immortalwrt/releases/25.12/packages/aarch64_generic/base
-src/gz immortalwrt_luci https://mirrors.ustc.edu.cn/immortalwrt/releases/25.12/packages/aarch64_generic/luci
-src/gz immortalwrt_packages https://mirrors.ustc.edu.cn/immortalwrt/releases/25.12/packages/aarch64_generic/packages
+# 写入immortalwrt源到feeds.conf.default
+cat >> feeds.conf.default <<EOF
+src-git immortalwrt_packages https://github.com/immortalwrt/packages.git;openwrt-25.12
+src-git immortalwrt_luci https://github.com/immortalwrt/luci.git;openwrt-25.12
 EOF
-# ========================================================
+
+# 更新feeds并安装包定义
+./scripts/feeds clean
+./scripts/feeds update -a
+./scripts/feeds install -a
+# ===============================================
