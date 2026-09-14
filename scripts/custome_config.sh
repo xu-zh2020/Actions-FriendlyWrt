@@ -15,5 +15,5 @@ EOF
 # 更新feeds并安装包定义
 ./scripts/feeds clean
 ./scripts/feeds update -a
-./scripts/feeds install -a
+#./scripts/feeds install -a
 # ===============================================
