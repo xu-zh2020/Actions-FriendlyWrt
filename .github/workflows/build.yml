@@ -188,7 +188,7 @@ jobs:
     strategy:
       matrix:
         VERSION: ['25.12']
-        CPU: [rk3328, rk3528, rk3399, rk3566, rk3568, rk3576, rk3588]
+        CPU: [rk3528]
         SET: [docker]
     steps:
     - name: Checkout
